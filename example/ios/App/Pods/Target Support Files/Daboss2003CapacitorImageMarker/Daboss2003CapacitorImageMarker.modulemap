@@ -1,6 +1,0 @@
-framework module Daboss2003CapacitorImageMarker {
-  umbrella header "Daboss2003CapacitorImageMarker-umbrella.h"
-
-  export *
-  module * { export * }
-}
