@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Image Marker Example</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #f6f7f9;
+        --fg: #1a1f2c;
+        --muted: #6b7280;
+        --card: #ffffff;
+        --accent: #2563eb;
+        --border: #e5e7eb;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #0f1115;
+          --fg: #e6e8ee;
+          --muted: #9ca3af;
+          --card: #161a22;
+          --accent: #60a5fa;
+          --border: #2a2f3a;
+        }
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font: 16px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        background: var(--bg);
+        color: var(--fg);
+        padding: max(env(safe-area-inset-top), 16px) 16px max(env(safe-area-inset-bottom), 16px);
+      }
+      header h1 {
+        margin: 0 0 6px;
+        font-size: 22px;
+      }
+      header p {
+        margin: 0 0 16px;
+        color: var(--muted);
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 16px;
+        margin-bottom: 16px;
+      }
+      .row {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 12px;
+      }
+      button, label.button {
+        appearance: none;
+        background: var(--accent);
+        color: white;
+        border: 0;
+        border-radius: 8px;
+        padding: 10px 14px;
+        font: inherit;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      button.secondary {
+        background: transparent;
+        color: var(--accent);
+        border: 1px solid var(--accent);
+      }
+      button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      input[type="file"] { display: none; }
+      img.preview {
+        display: block;
+        max-width: 100%;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: repeating-conic-gradient(#e5e7eb 0% 25%, #f9fafb 0% 50%) 0 0/16px 16px;
+      }
+      pre.log {
+        background: #00000020;
+        padding: 10px;
+        border-radius: 8px;
+        max-height: 180px;
+        overflow: auto;
+        font-size: 12px;
+        margin: 0;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      label.field {
+        display: block;
+        font-size: 13px;
+        color: var(--muted);
+        margin-bottom: 4px;
+      }
+      input[type="text"] {
+        width: 100%;
+        padding: 8px 10px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--bg);
+        color: var(--fg);
+        font: inherit;
+      }
+      select {
+        padding: 8px 10px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--bg);
+        color: var(--fg);
+        font: inherit;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>@daboss2003/capacitor-image-marker</h1>
+      <p>Tap a button to mark the source image. Works on Web, iOS, and Android.</p>
+    </header>
+
+    <section class="card">
+      <h3 style="margin-top:0">1. Pick a source image</h3>
+      <div class="row">
+        <label class="button" for="file-input">Choose image…</label>
+        <input type="file" id="file-input" accept="image/*" />
+        <button id="use-sample" class="secondary" type="button">Use sample</button>
+      </div>
+      <img id="source-preview" class="preview" alt="Source image will appear here" />
+    </section>
+
+    <section class="card">
+      <h3 style="margin-top:0">2. Configure watermark</h3>
+      <div class="grid">
+        <div>
+          <label class="field" for="text">Text</label>
+          <input id="text" type="text" value="© Image Marker" />
+        </div>
+        <div>
+          <label class="field" for="position">Position</label>
+          <select id="position">
+            <option value="topLeft">topLeft</option>
+            <option value="topCenter">topCenter</option>
+            <option value="topRight">topRight</option>
+            <option value="center">center</option>
+            <option value="bottomLeft">bottomLeft</option>
+            <option value="bottomCenter">bottomCenter</option>
+            <option value="bottomRight" selected>bottomRight</option>
+          </select>
+        </div>
+        <div>
+          <label class="field" for="color">Text color</label>
+          <input id="color" type="text" value="#ffffff" />
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h3 style="margin-top:0">3. Render</h3>
+      <div class="row">
+        <button id="run-text" type="button" disabled>Mark text</button>
+        <button id="run-image" class="secondary" type="button" disabled>Mark image (logo)</button>
+      </div>
+      <img id="result-preview" class="preview" alt="Result will appear here" />
+    </section>
+
+    <section class="card">
+      <h3 style="margin-top:0">Log</h3>
+      <pre id="log" class="log">Ready.</pre>
+    </section>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

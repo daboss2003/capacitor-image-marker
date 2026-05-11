@@ -8,4 +8,3 @@ const ImageMarker = registerPlugin<ImageMarkerPlugin>('ImageMarker', {
 
 export * from './definitions';
 export { ImageMarker };
-export default ImageMarker;
