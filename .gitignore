@@ -1,0 +1,33 @@
+# OS
+.DS_Store
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Build
+dist/
+build/
+*.tsbuildinfo
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# iOS
+ios/Pods/
+ios/Plugin.xcworkspace
+ios/build/
+*.xcuserdata
+*.xcuserstate
+DerivedData/
+
+# Android
+android/.gradle/
+android/.idea/
+android/build/
+android/local.properties
+android/captures/
+android/.cxx/

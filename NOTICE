@@ -1,0 +1,13 @@
+@daboss2003/capacitor-image-marker
+==================================
+
+This Capacitor plugin is a from-scratch port of the API surface of
+react-native-image-marker (https://github.com/JimmyDaddy/react-native-image-marker)
+by jimmydaddy, which is also distributed under the MIT License. No source code
+from the original project is included; this package reimplements the public API
+for the Capacitor platform.
+
+Original react-native-image-marker license:
+
+MIT License
+Copyright (c) 2023 jimmydaddy
