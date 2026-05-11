@@ -1,6 +1,6 @@
 {
   "name": "@daboss2003/capacitor-image-marker",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A Capacitor plugin for adding text and image watermarks to images on iOS, Android, and Web.",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",

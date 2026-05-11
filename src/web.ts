@@ -30,7 +30,11 @@ export class ImageMarkerWeb extends WebPlugin implements ImageMarkerPlugin {
     drawBaseImage(ctx, bg, options.backgroundImage);
 
     for (const text of options.watermarkTexts ?? []) {
-      drawText(ctx, text, canvas.width, canvas.height);
+      const merged: TextOptions = {
+        ...text,
+        position: text.position ?? text.positionOptions,
+      };
+      drawText(ctx, merged, canvas.width, canvas.height);
     }
 
     const rotated = applyBackgroundRotation(canvas, options.backgroundImage.rotate ?? 0);
@@ -39,18 +43,19 @@ export class ImageMarkerWeb extends WebPlugin implements ImageMarkerPlugin {
 
   async markImage(options: ImageMarkOptions): Promise<MarkResult> {
     requireSrc(options.backgroundImage);
-    if (!options.watermarkImages?.length) {
+    const markers = collectWatermarks(options);
+    if (!markers.length) {
       throw new Error('please set mark image!');
     }
-    options.watermarkImages.forEach(requireSrc);
+    markers.forEach(requireSrc);
 
     const bg = await loadImage(options.backgroundImage.src);
-    const watermarks = await Promise.all(options.watermarkImages.map(m => loadImage(m.src)));
+    const watermarks = await Promise.all(markers.map(m => loadImage(m.src)));
     const { canvas, ctx } = createCanvas(bg.width, bg.height);
 
     drawBaseImage(ctx, bg, options.backgroundImage);
 
-    options.watermarkImages.forEach((opts, idx) => {
+    markers.forEach((opts, idx) => {
       drawWatermarkImage(ctx, watermarks[idx], opts, canvas.width, canvas.height);
     });
 
@@ -61,6 +66,18 @@ export class ImageMarkerWeb extends WebPlugin implements ImageMarkerPlugin {
 
 function requireSrc(opts: ImageOptions | undefined): asserts opts is ImageOptions {
   if (!opts || !opts.src) throw new Error('please set image!');
+}
+
+function collectWatermarks(options: ImageMarkOptions): WatermarkImageOptions[] {
+  const list: WatermarkImageOptions[] = [];
+  if (options.watermarkImage?.src) {
+    list.push({
+      ...options.watermarkImage,
+      position: options.watermarkPositions,
+    });
+  }
+  if (options.watermarkImages?.length) list.push(...options.watermarkImages);
+  return list;
 }
 
 function createCanvas(width: number, height: number): { canvas: HTMLCanvasElement; ctx: CanvasRenderingContext2D } {
@@ -244,7 +261,7 @@ function drawTextBackground(
   textOriginY: number,
 ): void {
   const insets = resolvePadding(bg, containerW, containerH);
-  const type = bg.type ?? TextBackgroundType.fit;
+  const type = bg.type ?? TextBackgroundType.none;
 
   let x: number;
   let y: number;

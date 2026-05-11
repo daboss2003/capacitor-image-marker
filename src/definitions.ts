@@ -20,8 +20,12 @@ export enum Position {
 export enum TextBackgroundType {
   stretchX = 'stretchX',
   stretchY = 'stretchY',
-  fit = 'fit',
+  /** Background hugs the text (plus padding). Matches `TextBackgroundType.none` in the upstream RN library. */
+  none = 'fit',
 }
+
+/** Backwards-compatible alias preserved from the RN library — same values as {@link TextBackgroundType}. */
+export const TextBackgroundFit = TextBackgroundType.none;
 
 /**
  * Output format for the marked image.
@@ -124,6 +128,11 @@ export interface TextOptions {
    * or one of the enum positions for the corners/center of the parent image.
    */
   position?: PositionOptions;
+  /**
+   * @deprecated Use {@link TextOptions.position} instead. Kept for parity with
+   * the upstream RN library. When `position` is unset this value is used.
+   */
+  positionOptions?: PositionOptions;
   style?: TextStyle;
 }
 
@@ -168,6 +177,16 @@ export interface TextMarkOptions {
 export interface ImageMarkOptions {
   backgroundImage: ImageOptions;
   watermarkImages: WatermarkImageOptions[];
+  /**
+   * @deprecated Use {@link ImageMarkOptions.watermarkImages} (plural) instead.
+   * Provided for parity with the upstream RN library; when present it is
+   * prepended to `watermarkImages` and positioned with `watermarkPositions`.
+   */
+  watermarkImage?: ImageOptions;
+  /**
+   * @deprecated Pairs with the deprecated `watermarkImage` field above.
+   */
+  watermarkPositions?: PositionOptions;
   quality?: number;
   filename?: string;
   saveFormat?: ImageFormat;

@@ -68,7 +68,7 @@ const result = await ImageMarker.markText({
           color: '#000000aa',
         },
         textBackgroundStyle: {
-          type: TextBackgroundType.fit,
+          type: TextBackgroundType.none,
           color: '#00000088',
           padding: '8 12',
           cornerRadius: {

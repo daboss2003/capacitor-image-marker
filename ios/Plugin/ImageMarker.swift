@@ -89,7 +89,7 @@ final class ImageMarker {
               let bgSrc = stringSrc(bgDict["src"]) else {
             throw ImageMarkerError.missingImage
         }
-        let markers = options["watermarkImages"] as? [[String: Any]] ?? []
+        let markers = collectWatermarks(from: options)
         if markers.isEmpty || markers.contains(where: { stringSrc($0["src"]) == nil }) {
             throw ImageMarkerError.missingWatermark
         }
@@ -448,6 +448,23 @@ final class ImageMarker {
             return UIFont(descriptor: descriptor, size: size)
         }
         return base
+    }
+
+    /// Combines the deprecated singular `watermarkImage` (paired with
+    /// `watermarkPositions`) with the plural `watermarkImages` array. The
+    /// singular entry, when present, is rendered first.
+    private static func collectWatermarks(from options: [String: Any]) -> [[String: Any]] {
+        var result: [[String: Any]] = []
+        if var single = options["watermarkImage"] as? [String: Any], stringSrc(single["src"]) != nil {
+            if let pos = options["watermarkPositions"] as? [String: Any] {
+                single["position"] = pos
+            }
+            result.append(single)
+        }
+        if let plural = options["watermarkImages"] as? [[String: Any]] {
+            result.append(contentsOf: plural)
+        }
+        return result
     }
 
     private static func stringSrc(_ raw: Any?) -> String? {

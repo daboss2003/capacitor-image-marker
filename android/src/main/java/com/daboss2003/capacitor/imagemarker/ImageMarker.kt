@@ -61,7 +61,7 @@ object ImageMarker {
     fun markImage(context: Context, options: Map<String, Any?>): String {
         val bgOpts = options["backgroundImage"].asMap() ?: throw MarkerException("please set image!")
         val src = bgOpts["src"].asString() ?: throw MarkerException("please set image!")
-        val markers = options["watermarkImages"].asList()?.filterIsInstance<Map<String, Any?>>() ?: emptyList()
+        val markers = collectWatermarks(options)
         if (markers.isEmpty() || markers.any { it["src"].asString().isNullOrEmpty() }) {
             throw MarkerException("please set mark image!")
         }
@@ -85,6 +85,26 @@ object ImageMarker {
             saveFormatFrom(options["saveFormat"].asString()),
             options["quality"].asInt(100),
             options["filename"].asString())
+    }
+
+    /**
+     * Combines the deprecated singular `watermarkImage` (paired with
+     * `watermarkPositions`) with the plural `watermarkImages` array. The
+     * singular entry, when present, is rendered first.
+     */
+    private fun collectWatermarks(options: Map<String, Any?>): List<Map<String, Any?>> {
+        val result = mutableListOf<Map<String, Any?>>()
+        options["watermarkImage"].asMap()?.let { single ->
+            if (!single["src"].asString().isNullOrEmpty()) {
+                val merged = single.toMutableMap()
+                options["watermarkPositions"].asMap()?.let { merged["position"] = it }
+                result += merged
+            }
+        }
+        options["watermarkImages"].asList()
+            ?.filterIsInstance<Map<String, Any?>>()
+            ?.let { result += it }
+        return result
     }
 
     // ---- Canvas plumbing ------------------------------------------------------

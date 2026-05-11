@@ -96,7 +96,7 @@ runTextBtn.addEventListener('click', async () => {
             bold: true,
             shadowStyle: { dx: 2, dy: 2, radius: 4, color: '#000000aa' },
             textBackgroundStyle: {
-              type: TextBackgroundType.fit,
+              type: TextBackgroundType.none,
               color: '#00000088',
               padding: '8 14',
               cornerRadius: { all: { x: 8, y: 8 } },
