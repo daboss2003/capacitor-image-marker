@@ -22,6 +22,24 @@ npx cap sync
 | Android | SDK 22 |
 | Web    | Any modern browser with Canvas 2D |
 
+## Example app
+
+A working Capacitor app that exercises every feature (text watermarks, image
+watermarks, position presets, font size, scale, max-size, save format, etc.)
+lives in [`example/`](./example). Quick start:
+
+```bash
+cd example
+npm install
+npm run dev            # opens http://localhost:5173
+
+# Native:
+npx cap add ios && npm run ios
+npx cap add android && npm run android
+```
+
+See [`example/README.md`](./example/README.md) for details.
+
 ## Image sources
 
 Wherever an `ImageOptions.src` is accepted, you may pass:
