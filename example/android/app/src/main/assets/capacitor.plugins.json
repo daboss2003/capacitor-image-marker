@@ -1,0 +1,6 @@
+[
+	{
+		"pkg": "@daboss2003/capacitor-image-marker",
+		"classpath": "com.daboss2003.capacitor.imagemarker.ImageMarkerPlugin"
+	}
+]

@@ -1,0 +1,8 @@
+{
+	"appId": "com.daboss2003.imagemarker.example",
+	"appName": "Image Marker Example",
+	"webDir": "dist",
+	"packageClassList": [
+		"ImageMarkerPlugin"
+	]
+}
