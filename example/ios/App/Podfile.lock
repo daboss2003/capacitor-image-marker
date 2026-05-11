@@ -1,0 +1,28 @@
+PODS:
+  - Capacitor (6.2.1):
+    - CapacitorCordova
+  - CapacitorCordova (6.2.1)
+  - Daboss2003CapacitorImageMarker (1.0.0):
+    - Capacitor
+
+DEPENDENCIES:
+  - "Capacitor (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
+  - Daboss2003CapacitorImageMarker (from `../../..`)
+
+EXTERNAL SOURCES:
+  Capacitor:
+    :path: "../../node_modules/@capacitor/ios"
+  CapacitorCordova:
+    :path: "../../node_modules/@capacitor/ios"
+  Daboss2003CapacitorImageMarker:
+    :path: "../../.."
+
+SPEC CHECKSUMS:
+  Capacitor: c95400d761e376be9da6be5a05f226c0e865cebf
+  CapacitorCordova: 8d93e14982f440181be7304aa9559ca631d77fff
+  Daboss2003CapacitorImageMarker: f1faeb5c6785f354e9468cd9116da899b22af98d
+
+PODFILE CHECKSUM: 00b9c47055cf787477afa720dcca8f2bd21483e6
+
+COCOAPODS: 1.16.2

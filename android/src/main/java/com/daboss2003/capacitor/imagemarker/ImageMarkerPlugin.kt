@@ -27,7 +27,7 @@ class ImageMarkerPlugin : Plugin() {
                     ImageMarker.markText(context, call.data.toMap())
                 }
                 call.resolve(JSObject().put("uri", uri))
-            } catch (e: Throwable) {
+            } catch (e: Exception) {
                 Log.e(TAG, "markText failed", e)
                 call.reject(e.message ?: "markText failed", e)
             }
@@ -42,7 +42,7 @@ class ImageMarkerPlugin : Plugin() {
                     ImageMarker.markImage(context, call.data.toMap())
                 }
                 call.resolve(JSObject().put("uri", uri))
-            } catch (e: Throwable) {
+            } catch (e: Exception) {
                 Log.e(TAG, "markImage failed", e)
                 call.reject(e.message ?: "markImage failed", e)
             }
